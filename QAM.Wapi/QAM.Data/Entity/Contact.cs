@@ -13,5 +13,6 @@ namespace QAM.Data.Entity
         public virtual User User { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
+        public bool isDefault { get; set; }
     }
 }

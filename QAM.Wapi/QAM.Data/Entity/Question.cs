@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace QAM.Data.Entity
 {
-    internal class Question
+    public class Question
     {
-        public string question{get; set;}
-        public string Explanation { get; set;}
         public int SubjectId {  get; set;}
         public virtual Subject Subject { get; set;}
+        public string question{get; set;}
+        public string Explanation { get; set;}
         public int Status { get; set;}
     }
 }
