@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace QAM.Data.Entity
 {
-    internal class Contact:BaseEntity
+    public class Contact:BaseEntity
     {
         public int UserId { get; set; }
         public virtual User User { get; set; }
