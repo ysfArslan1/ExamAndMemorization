@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QAM.Data.Scheme
+namespace QAM.Scheme
 {
     // User sınıfı için gelen create requestleri almakta kullanılır.
     public class CreateUserRequest : BaseRequest
@@ -25,8 +25,6 @@ namespace QAM.Data.Scheme
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public string? Email { get; set; }
-        public string? Password { get; set; }
-        public DateTime LastActivityDate { get; set; }
         public int RoleId { get; set; }
     }
 

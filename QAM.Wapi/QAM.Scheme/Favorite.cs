@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QAM.Data.Scheme
+namespace QAM.Scheme
 {
     // Favorite sınıfı için gelen create requestleri almakta kullanılır.
     public class CreateFavoriteRequest : BaseRequest
