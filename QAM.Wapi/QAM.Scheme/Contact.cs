@@ -19,7 +19,7 @@ namespace QAM.Scheme
     // Contact sınıfı için gelen update requestleri almakta kullanılır.
     public class UpdateContactRequest : BaseRequest
     {
-        public decimal Email { get; set; }
+        public string Email { get; set; }
         public string PhoneNumber { get; set; }
         public bool isDefault { get; set; }
     }

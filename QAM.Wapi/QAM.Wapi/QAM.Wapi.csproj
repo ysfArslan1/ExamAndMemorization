@@ -23,7 +23,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\QAM.Base\QAM.Base.csproj" />
+    <ProjectReference Include="..\QAM.Business\QAM.Business.csproj" />
     <ProjectReference Include="..\QAM.Data\QAM.Data.csproj" />
+    <ProjectReference Include="..\QAM.Scheme\QAM.Scheme.csproj" />
   </ItemGroup>
 
 </Project>
