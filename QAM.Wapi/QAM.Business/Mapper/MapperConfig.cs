@@ -26,5 +26,10 @@ public class MapperConfig : Profile
         CreateMap<Question, QuestionResponse>()
             .ForMember(dest => dest.SubjectName,
                 src => src.MapFrom(x => x.Subject.Name));
+
+        CreateMap<CreateSubjectRequest, Subject>();
+        CreateMap<Subject, SubjectResponse>()
+            .ForMember(dest => dest.UserName,
+                src => src.MapFrom(x => x.User.FirstName + " " + x.User.LastName));
     }
 }
