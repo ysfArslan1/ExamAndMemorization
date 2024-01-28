@@ -5,10 +5,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using QAM.Base.Entity;
 
 namespace QAM.Data.Entity
 {
-    public class TagSubject
+    public class TagSubject : BaseEntity
     {
         public int Id { get; set; }
         public int TagId { get; set; }
@@ -20,6 +21,11 @@ namespace QAM.Data.Entity
     {
         public void Configure(EntityTypeBuilder<TagSubject> builder)
         {
+            builder.Property(x => x.InsertDate).IsRequired(true);
+            builder.Property(x => x.InsertUserId).IsRequired(true);
+            builder.Property(x => x.UpdateDate).IsRequired(false);
+            builder.Property(x => x.UpdateUserId).IsRequired(false);
+            builder.Property(x => x.IsActive).IsRequired(true).HasDefaultValue(true);
             builder.HasKey(x => x.Id);
         }
     }
