@@ -46,9 +46,9 @@ public class FavoriteController : ControllerBase
         CreateFavoriteRequestValidator validator = new CreateFavoriteRequestValidator();
         validator.ValidateAndThrow(Favorite);
 
-        string _id = (User.Identity as ClaimsIdentity).FindFirst("Id")?.Value;
-        int CurrentUserId = int.Parse(_id);
-        CurrentUserId = 1;
+        //string _id = (User.Identity as ClaimsIdentity).FindFirst("Id")?.Value;
+        //int CurrentUserId = int.Parse(_id);
+        int CurrentUserId = 1;
 
         var operation = new CreateFavoriteCommand(CurrentUserId, Favorite);
         var result = await mediator.Send(operation);
@@ -63,9 +63,9 @@ public class FavoriteController : ControllerBase
         UpdateFavoriteRequestValidator validator = new UpdateFavoriteRequestValidator();
         validator.ValidateAndThrow(Favorite);
 
-        string _id = (User.Identity as ClaimsIdentity).FindFirst("Id")?.Value;
-        int CurrentUserId = int.Parse(_id);
-        CurrentUserId = 1;
+        //string _id = (User.Identity as ClaimsIdentity).FindFirst("Id")?.Value;
+        //int CurrentUserId = int.Parse(_id);
+        int CurrentUserId = 1;
 
         var operation = new UpdateFavoriteCommand(id, CurrentUserId, Favorite);
         var result = await mediator.Send(operation);

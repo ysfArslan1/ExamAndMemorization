@@ -46,9 +46,9 @@ public class QuestionController : ControllerBase
         CreateQuestionRequestValidator validator = new CreateQuestionRequestValidator();
         validator.ValidateAndThrow(Question);
 
-        string _id = (User.Identity as ClaimsIdentity).FindFirst("Id")?.Value;
-        int CurrentUserId = int.Parse(_id);
-        CurrentUserId = 1;
+        //string _id = (User.Identity as ClaimsIdentity).FindFirst("Id")?.Value;
+        //int CurrentUserId = int.Parse(_id);
+        int CurrentUserId = 1;
 
         var operation = new CreateQuestionCommand(CurrentUserId, Question);
         var result = await mediator.Send(operation);
@@ -63,9 +63,9 @@ public class QuestionController : ControllerBase
         UpdateQuestionRequestValidator validator = new UpdateQuestionRequestValidator();
         validator.ValidateAndThrow(Question);
 
-        string _id = (User.Identity as ClaimsIdentity).FindFirst("Id")?.Value;
-        int CurrentUserId = int.Parse(_id);
-        CurrentUserId = 1;
+        //string _id = (User.Identity as ClaimsIdentity).FindFirst("Id")?.Value;
+        //int CurrentUserId = int.Parse(_id);
+        int CurrentUserId = 1;
 
         var operation = new UpdateQuestionCommand(id, CurrentUserId, Question);
         var result = await mediator.Send(operation);

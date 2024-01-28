@@ -46,9 +46,9 @@ public class ContactController : ControllerBase
         CreateContactRequestValidator validator = new CreateContactRequestValidator();
         validator.ValidateAndThrow(Contact);
 
-        string _id = (User.Identity as ClaimsIdentity).FindFirst("Id")?.Value;
-        int CurrentUserId = int.Parse(_id);
-        CurrentUserId = 1;
+        //string _id = (User.Identity as ClaimsIdentity).FindFirst("Id")?.Value;
+        //int CurrentUserId = int.Parse(_id);
+        int CurrentUserId = 1;
 
         var operation = new CreateContactCommand(CurrentUserId, Contact);
         var result = await mediator.Send(operation);
@@ -63,9 +63,9 @@ public class ContactController : ControllerBase
         UpdateContactRequestValidator validator = new UpdateContactRequestValidator();
         validator.ValidateAndThrow(Contact);
 
-        string _id = (User.Identity as ClaimsIdentity).FindFirst("Id")?.Value;
-        int CurrentUserId = int.Parse(_id);
-        CurrentUserId = 1;
+        //string _id = (User.Identity as ClaimsIdentity).FindFirst("Id")?.Value;
+        //int CurrentUserId = int.Parse(_id);
+        int CurrentUserId = 1;
 
         var operation = new UpdateContactCommand(id, CurrentUserId, Contact);
         var result = await mediator.Send(operation);

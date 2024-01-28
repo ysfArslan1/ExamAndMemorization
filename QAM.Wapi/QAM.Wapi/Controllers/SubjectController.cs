@@ -46,9 +46,9 @@ public class SubjectController : ControllerBase
         CreateSubjectRequestValidator validator = new CreateSubjectRequestValidator();
         validator.ValidateAndThrow(Subject);
 
-        string _id = (User.Identity as ClaimsIdentity).FindFirst("Id")?.Value;
-        int CurrentUserId = int.Parse(_id);
-        CurrentUserId = 1;
+        //string _id = (User.Identity as ClaimsIdentity).FindFirst("Id")?.Value;
+        //int CurrentUserId = int.Parse(_id);
+        int CurrentUserId = 1;
 
         var operation = new CreateSubjectCommand(CurrentUserId, Subject);
         var result = await mediator.Send(operation);
@@ -63,9 +63,9 @@ public class SubjectController : ControllerBase
         UpdateSubjectRequestValidator validator = new UpdateSubjectRequestValidator();
         validator.ValidateAndThrow(Subject);
 
-        string _id = (User.Identity as ClaimsIdentity).FindFirst("Id")?.Value;
-        int CurrentUserId = int.Parse(_id);
-        CurrentUserId = 1;
+        //string _id = (User.Identity as ClaimsIdentity).FindFirst("Id")?.Value;
+        //int CurrentUserId = int.Parse(_id);
+        int CurrentUserId = 1;
 
         var operation = new UpdateSubjectCommand(id, CurrentUserId, Subject);
         var result = await mediator.Send(operation);

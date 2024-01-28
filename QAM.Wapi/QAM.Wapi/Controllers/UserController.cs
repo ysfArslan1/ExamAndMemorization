@@ -46,8 +46,9 @@ public class UserController : ControllerBase
         CreateUserRequestValidator validator = new CreateUserRequestValidator();
         validator.ValidateAndThrow(user);
 
-        string _id = (User.Identity as ClaimsIdentity).FindFirst("Id")?.Value;
-        int CurrentUserId = int.Parse(_id);
+        //string _id = (User.Identity as ClaimsIdentity).FindFirst("Id")?.Value;
+        //int CurrentUserId = int.Parse(_id);
+        int CurrentUserId = 1;
 
         var operation = new CreateUserCommand(CurrentUserId, user);
         var result = await mediator.Send(operation);
@@ -62,8 +63,9 @@ public class UserController : ControllerBase
         UpdateUserRequestValidator validator = new UpdateUserRequestValidator();
         validator.ValidateAndThrow(user);
 
-        string _id = (User.Identity as ClaimsIdentity).FindFirst("Id")?.Value;
-        int CurrentUserId = int.Parse(_id);
+        //string _id = (User.Identity as ClaimsIdentity).FindFirst("Id")?.Value;
+        //int CurrentUserId = int.Parse(_id);
+        int CurrentUserId = 1;
 
         var operation = new UpdateUserCommand(id,CurrentUserId, user);
         var result = await mediator.Send(operation);
