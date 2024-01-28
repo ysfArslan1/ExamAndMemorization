@@ -31,5 +31,22 @@ public class MapperConfig : Profile
         CreateMap<Subject, SubjectResponse>()
             .ForMember(dest => dest.UserName,
                 src => src.MapFrom(x => x.User.FirstName + " " + x.User.LastName));
+
+        CreateMap<CreateTagRequest, Tag>();
+        CreateMap<Tag, TagResponse>();
+
+        CreateMap<CreateFavoriteRequest, Favorite>();
+        CreateMap<Favorite, FavoriteResponse>()
+            .ForMember(dest => dest.UserName,
+                src => src.MapFrom(x => x.User.FirstName + " " + x.User.LastName))
+            .ForMember(dest => dest.SubjectName,
+                src => src.MapFrom(x => x.Subject.Name));
+
+        CreateMap<CreateTagSubjectRequest, TagSubject>();
+        CreateMap<TagSubject, TagSubjectResponse>()
+            .ForMember(dest => dest.TagName,
+                src => src.MapFrom(x => x.Tag.Name))
+            .ForMember(dest => dest.SubjectName,
+                src => src.MapFrom(x => x.Subject.Name));
     }
 }
