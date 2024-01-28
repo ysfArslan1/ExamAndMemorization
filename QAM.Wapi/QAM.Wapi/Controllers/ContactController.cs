@@ -47,9 +47,10 @@ public class ContactController : ControllerBase
         validator.ValidateAndThrow(Contact);
 
         string _id = (User.Identity as ClaimsIdentity).FindFirst("Id")?.Value;
-        int CurrentContactId = int.Parse(_id);
+        int CurrentUserId = int.Parse(_id);
+        CurrentUserId = 1;
 
-        var operation = new CreateContactCommand(CurrentContactId, Contact);
+        var operation = new CreateContactCommand(CurrentUserId, Contact);
         var result = await mediator.Send(operation);
         return result;
     }
@@ -63,9 +64,10 @@ public class ContactController : ControllerBase
         validator.ValidateAndThrow(Contact);
 
         string _id = (User.Identity as ClaimsIdentity).FindFirst("Id")?.Value;
-        int CurrentContactId = int.Parse(_id);
+        int CurrentUserId = int.Parse(_id);
+        CurrentUserId = 1;
 
-        var operation = new UpdateContactCommand(id,CurrentContactId, Contact);
+        var operation = new UpdateContactCommand(id, CurrentUserId, Contact);
         var result = await mediator.Send(operation);
         return result;
     }

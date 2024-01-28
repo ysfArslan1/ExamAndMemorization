@@ -47,9 +47,10 @@ public class RoleController : ControllerBase
         validator.ValidateAndThrow(Role);
 
         string _id = (User.Identity as ClaimsIdentity).FindFirst("Id")?.Value;
-        int CurrentRoleId = int.Parse(_id);
+        int CurrentUserId = int.Parse(_id);
+        CurrentUserId = 1;
 
-        var operation = new CreateRoleCommand(CurrentRoleId, Role);
+        var operation = new CreateRoleCommand(CurrentUserId, Role);
         var result = await mediator.Send(operation);
         return result;
     }
@@ -63,9 +64,10 @@ public class RoleController : ControllerBase
         validator.ValidateAndThrow(Role);
 
         string _id = (User.Identity as ClaimsIdentity).FindFirst("Id")?.Value;
-        int CurrentRoleId = int.Parse(_id);
+        int CurrentUserId = int.Parse(_id);
+        CurrentUserId = 1;
 
-        var operation = new UpdateRoleCommand(id,CurrentRoleId, Role);
+        var operation = new UpdateRoleCommand(id, CurrentUserId, Role);
         var result = await mediator.Send(operation);
         return result;
     }

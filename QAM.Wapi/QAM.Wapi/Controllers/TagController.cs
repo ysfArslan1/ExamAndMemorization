@@ -47,9 +47,10 @@ public class TagController : ControllerBase
         validator.ValidateAndThrow(Tag);
 
         string _id = (User.Identity as ClaimsIdentity).FindFirst("Id")?.Value;
-        int CurrentTagId = int.Parse(_id);
+        int CurrentUserId = int.Parse(_id);
+        CurrentUserId = 1;
 
-        var operation = new CreateTagCommand(CurrentTagId, Tag);
+        var operation = new CreateTagCommand(CurrentUserId, Tag);
         var result = await mediator.Send(operation);
         return result;
     }
@@ -63,9 +64,10 @@ public class TagController : ControllerBase
         validator.ValidateAndThrow(Tag);
 
         string _id = (User.Identity as ClaimsIdentity).FindFirst("Id")?.Value;
-        int CurrentTagId = int.Parse(_id);
+        int CurrentUserId = int.Parse(_id);
+        CurrentUserId = 1;
 
-        var operation = new UpdateTagCommand(id,CurrentTagId, Tag);
+        var operation = new UpdateTagCommand(id, CurrentUserId, Tag);
         var result = await mediator.Send(operation);
         return result;
     }

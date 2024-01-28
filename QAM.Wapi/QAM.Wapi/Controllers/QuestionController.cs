@@ -47,9 +47,10 @@ public class QuestionController : ControllerBase
         validator.ValidateAndThrow(Question);
 
         string _id = (User.Identity as ClaimsIdentity).FindFirst("Id")?.Value;
-        int CurrentQuestionId = int.Parse(_id);
+        int CurrentUserId = int.Parse(_id);
+        CurrentUserId = 1;
 
-        var operation = new CreateQuestionCommand(CurrentQuestionId, Question);
+        var operation = new CreateQuestionCommand(CurrentUserId, Question);
         var result = await mediator.Send(operation);
         return result;
     }
@@ -63,9 +64,10 @@ public class QuestionController : ControllerBase
         validator.ValidateAndThrow(Question);
 
         string _id = (User.Identity as ClaimsIdentity).FindFirst("Id")?.Value;
-        int CurrentQuestionId = int.Parse(_id);
+        int CurrentUserId = int.Parse(_id);
+        CurrentUserId = 1;
 
-        var operation = new UpdateQuestionCommand(id,CurrentQuestionId, Question);
+        var operation = new UpdateQuestionCommand(id, CurrentUserId, Question);
         var result = await mediator.Send(operation);
         return result;
     }

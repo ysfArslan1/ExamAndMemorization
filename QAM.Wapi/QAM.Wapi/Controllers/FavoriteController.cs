@@ -47,9 +47,10 @@ public class FavoriteController : ControllerBase
         validator.ValidateAndThrow(Favorite);
 
         string _id = (User.Identity as ClaimsIdentity).FindFirst("Id")?.Value;
-        int CurrentFavoriteId = int.Parse(_id);
+        int CurrentUserId = int.Parse(_id);
+        CurrentUserId = 1;
 
-        var operation = new CreateFavoriteCommand(CurrentFavoriteId, Favorite);
+        var operation = new CreateFavoriteCommand(CurrentUserId, Favorite);
         var result = await mediator.Send(operation);
         return result;
     }
@@ -63,9 +64,10 @@ public class FavoriteController : ControllerBase
         validator.ValidateAndThrow(Favorite);
 
         string _id = (User.Identity as ClaimsIdentity).FindFirst("Id")?.Value;
-        int CurrentFavoriteId = int.Parse(_id);
+        int CurrentUserId = int.Parse(_id);
+        CurrentUserId = 1;
 
-        var operation = new UpdateFavoriteCommand(id,CurrentFavoriteId, Favorite);
+        var operation = new UpdateFavoriteCommand(id, CurrentUserId, Favorite);
         var result = await mediator.Send(operation);
         return result;
     }
