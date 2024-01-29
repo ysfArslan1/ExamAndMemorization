@@ -10,7 +10,7 @@ using QAM.Data.DBOperations;
 namespace QAM.Business.Command;
 
 public class RoleCommandHandler :
-    IRequestHandler<CreateRoleCommand, ApiResponse<RoleResponse>>,
+    IRequestHandler<CreateRoleCommand, ApiResponse>,
     IRequestHandler<UpdateRoleCommand,ApiResponse>,
     IRequestHandler<DeleteRoleCommand,ApiResponse>
 
@@ -25,13 +25,13 @@ public class RoleCommandHandler :
     }
 
     // Role sýnýfýnýn database de oluþturulmasý için kullanýlan command
-    public async Task<ApiResponse<RoleResponse>> Handle(CreateRoleCommand request, CancellationToken cancellationToken)
+    public async Task<ApiResponse> Handle(CreateRoleCommand request, CancellationToken cancellationToken)
     {
         var check = await dbContext.Set<Role>().Where(x => x.Name == request.Model.Name)
             .FirstOrDefaultAsync(cancellationToken);
         if (check != null)
         {
-            return new ApiResponse<RoleResponse>($"{request.Model.Name} is used by another Role.");
+            return new ApiResponse($"{request.Model.Name} is used by another Role.");
         }
 
         var entity = mapper.Map<CreateRoleRequest, Role>(request.Model);
@@ -41,8 +41,7 @@ public class RoleCommandHandler :
         var entityResult = await dbContext.AddAsync(entity, cancellationToken);
         await dbContext.SaveChangesAsync(cancellationToken);
 
-        var mapped = mapper.Map<Role, RoleResponse>(entityResult.Entity);
-        return new ApiResponse<RoleResponse>(mapped);
+        return new ApiResponse();
     }
 
     // Role sýnýfýnýn database de güncellenmesi için kullanýlan command

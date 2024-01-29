@@ -10,7 +10,7 @@ using QAM.Data.DBOperations;
 namespace QAM.Business.Command;
 
 public class FavoriteCommandHandler :
-    IRequestHandler<CreateFavoriteCommand, ApiResponse<FavoriteResponse>>,
+    IRequestHandler<CreateFavoriteCommand, ApiResponse>,
     IRequestHandler<UpdateFavoriteCommand,ApiResponse>,
     IRequestHandler<DeleteFavoriteCommand,ApiResponse>
 
@@ -25,14 +25,13 @@ public class FavoriteCommandHandler :
     }
 
     // Favorite sýnýfýnýn database de oluþturulmasý için kullanýlan command
-    public async Task<ApiResponse<FavoriteResponse>> Handle(CreateFavoriteCommand request, CancellationToken cancellationToken)
+    public async Task<ApiResponse> Handle(CreateFavoriteCommand request, CancellationToken cancellationToken)
     {
         var check = await dbContext.Set<Favorite>().Where(x => x.UserId == request.Model.UserId && x.SubjectId == request.Model.SubjectId)
             .FirstOrDefaultAsync(cancellationToken);
         if (check != null)
         {
-            return new ApiResponse<FavoriteResponse>
-                ($"{request.Model.UserId} User and {request.Model.SubjectId} Subject used by another Favorite.");
+            return new ApiResponse($"{request.Model.UserId} User and {request.Model.SubjectId} Subject used by another Favorite.");
         }
 
         var entity = mapper.Map<CreateFavoriteRequest, Favorite>(request.Model);
@@ -42,8 +41,7 @@ public class FavoriteCommandHandler :
         var entityResult = await dbContext.AddAsync(entity, cancellationToken);
         await dbContext.SaveChangesAsync(cancellationToken);
 
-        var mapped = mapper.Map<Favorite, FavoriteResponse>(entityResult.Entity);
-        return new ApiResponse<FavoriteResponse>(mapped);
+        return new ApiResponse();
     }
 
     // Favorite sýnýfýnýn database de güncellenmesi için kullanýlan command

@@ -10,7 +10,7 @@ using QAM.Data.DBOperations;
 namespace QAM.Business.Command;
 
 public class QuestionCommandHandler :
-    IRequestHandler<CreateQuestionCommand, ApiResponse<QuestionResponse>>,
+    IRequestHandler<CreateQuestionCommand, ApiResponse>,
     IRequestHandler<UpdateQuestionCommand,ApiResponse>,
     IRequestHandler<DeleteQuestionCommand,ApiResponse>
 
@@ -25,13 +25,13 @@ public class QuestionCommandHandler :
     }
 
     // Question sýnýfýnýn database de oluþturulmasý için kullanýlan command
-    public async Task<ApiResponse<QuestionResponse>> Handle(CreateQuestionCommand request, CancellationToken cancellationToken)
+    public async Task<ApiResponse> Handle(CreateQuestionCommand request, CancellationToken cancellationToken)
     {
         var check = await dbContext.Set<Question>().Where(x => x.question == request.Model.question)
             .FirstOrDefaultAsync(cancellationToken);
         if (check != null)
         {
-            return new ApiResponse<QuestionResponse>($"{request.Model.question} is used by another Question.");
+            return new ApiResponse($"{request.Model.question} is used by another Question.");
         }
 
         var entity = mapper.Map<CreateQuestionRequest, Question>(request.Model);
@@ -41,8 +41,7 @@ public class QuestionCommandHandler :
         var entityResult = await dbContext.AddAsync(entity, cancellationToken);
         await dbContext.SaveChangesAsync(cancellationToken);
 
-        var mapped = mapper.Map<Question, QuestionResponse>(entityResult.Entity);
-        return new ApiResponse<QuestionResponse>(mapped);
+        return new ApiResponse();
     }
 
     // Question sýnýfýnýn database de güncellenmesi için kullanýlan command

@@ -10,7 +10,7 @@ using QAM.Data.DBOperations;
 namespace QAM.Business.Command;
 
 public class TagCommandHandler :
-    IRequestHandler<CreateTagCommand, ApiResponse<TagResponse>>,
+    IRequestHandler<CreateTagCommand, ApiResponse>,
     IRequestHandler<UpdateTagCommand,ApiResponse>,
     IRequestHandler<DeleteTagCommand,ApiResponse>
 
@@ -25,13 +25,13 @@ public class TagCommandHandler :
     }
 
     // Tag sýnýfýnýn database de oluþturulmasý için kullanýlan command
-    public async Task<ApiResponse<TagResponse>> Handle(CreateTagCommand request, CancellationToken cancellationToken)
+    public async Task<ApiResponse> Handle(CreateTagCommand request, CancellationToken cancellationToken)
     {
         var check = await dbContext.Set<Tag>().Where(x => x.Name == request.Model.Name)
             .FirstOrDefaultAsync(cancellationToken);
         if (check != null)
         {
-            return new ApiResponse<TagResponse>($"{request.Model.Name} is used by another Tag.");
+            return new ApiResponse($"{request.Model.Name} is used by another Tag.");
         }
 
         var entity = mapper.Map<CreateTagRequest, Tag>(request.Model);
@@ -41,8 +41,7 @@ public class TagCommandHandler :
         var entityResult = await dbContext.AddAsync(entity, cancellationToken);
         await dbContext.SaveChangesAsync(cancellationToken);
 
-        var mapped = mapper.Map<Tag, TagResponse>(entityResult.Entity);
-        return new ApiResponse<TagResponse>(mapped);
+        return new ApiResponse();
     }
 
     // Tag sýnýfýnýn database de güncellenmesi için kullanýlan command

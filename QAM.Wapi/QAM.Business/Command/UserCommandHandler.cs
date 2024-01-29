@@ -10,7 +10,7 @@ using QAM.Data.DBOperations;
 namespace QAM.Business.Command;
 
 public class UserCommandHandler :
-    IRequestHandler<CreateUserCommand, ApiResponse<UserResponse>>,
+    IRequestHandler<CreateUserCommand, ApiResponse>,
     IRequestHandler<UpdateUserCommand,ApiResponse>,
     IRequestHandler<DeleteUserCommand,ApiResponse>
 
@@ -25,26 +25,26 @@ public class UserCommandHandler :
     }
 
     // User sýnýfýnýn database de oluþturulmasý için kullanýlan command
-    public async Task<ApiResponse<UserResponse>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
+    public async Task<ApiResponse> Handle(CreateUserCommand request, CancellationToken cancellationToken)
     {
         var check = await dbContext.Set<User>().Where(x => x.IdentityNumber == request.Model.IdentityNumber)
             .FirstOrDefaultAsync(cancellationToken);
         if (check != null)
         {
-            return new ApiResponse<UserResponse>($"{request.Model.IdentityNumber} is used by another User.");
+            return new ApiResponse($"{request.Model.IdentityNumber} is used by another User.");
         }
         var checkRole = await dbContext.Set<Role>().Where(x => x.Id == request.Model.RoleId)
             .FirstOrDefaultAsync(cancellationToken);
         if (checkRole == null)
         {
-            return new ApiResponse<UserResponse>("Role not found");
+            return new ApiResponse("Role not found");
         }
 
         var checkEmail = await dbContext.Set<Contact>().Where(x => x.Email == request.Model.Email)
             .FirstOrDefaultAsync(cancellationToken);
         if (checkEmail != null)
         {
-            return new ApiResponse<UserResponse>($"{request.Model.Email} is used by another User.");
+            return new ApiResponse($"{request.Model.Email} is used by another User.");
         }
 
         var entity = mapper.Map<CreateUserRequest, User>(request.Model);
@@ -54,8 +54,7 @@ public class UserCommandHandler :
         var entityResult = await dbContext.AddAsync(entity, cancellationToken);
         await dbContext.SaveChangesAsync(cancellationToken);
 
-        var mapped = mapper.Map<User, UserResponse>(entityResult.Entity);
-        return new ApiResponse<UserResponse>(mapped);
+        return new ApiResponse();
     }
 
     // User sýnýfýnýn database de güncellenmesi için kullanýlan command

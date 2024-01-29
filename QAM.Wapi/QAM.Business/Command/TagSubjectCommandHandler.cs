@@ -10,7 +10,7 @@ using QAM.Data.DBOperations;
 namespace QAM.Business.Command;
 
 public class TagSubjectCommandHandler :
-    IRequestHandler<CreateTagSubjectCommand, ApiResponse<TagSubjectResponse>>,
+    IRequestHandler<CreateTagSubjectCommand, ApiResponse>,
     IRequestHandler<UpdateTagSubjectCommand,ApiResponse>,
     IRequestHandler<DeleteTagSubjectCommand,ApiResponse>
 
@@ -25,13 +25,13 @@ public class TagSubjectCommandHandler :
     }
 
     // TagSubject sýnýfýnýn database de oluþturulmasý için kullanýlan command
-    public async Task<ApiResponse<TagSubjectResponse>> Handle(CreateTagSubjectCommand request, CancellationToken cancellationToken)
+    public async Task<ApiResponse> Handle(CreateTagSubjectCommand request, CancellationToken cancellationToken)
     {
         var check = await dbContext.Set<TagSubject>().Where(x => x.TagId == request.Model.TagId && x.SubjectId == request.Model.SubjectId)
             .FirstOrDefaultAsync(cancellationToken);
         if (check != null)
         {
-            return new ApiResponse<TagSubjectResponse>($"{request.Model.TagId} Tag and {request.Model.SubjectId} Subject  used by another TagSubject.");
+            return new ApiResponse($"{request.Model.TagId} Tag and {request.Model.SubjectId} Subject  used by another TagSubject.");
         }
 
         var entity = mapper.Map<CreateTagSubjectRequest, TagSubject>(request.Model);
@@ -41,8 +41,7 @@ public class TagSubjectCommandHandler :
         var entityResult = await dbContext.AddAsync(entity, cancellationToken);
         await dbContext.SaveChangesAsync(cancellationToken);
 
-        var mapped = mapper.Map<TagSubject, TagSubjectResponse>(entityResult.Entity);
-        return new ApiResponse<TagSubjectResponse>(mapped);
+        return new ApiResponse();
     }
 
     // TagSubject sýnýfýnýn database de güncellenmesi için kullanýlan command

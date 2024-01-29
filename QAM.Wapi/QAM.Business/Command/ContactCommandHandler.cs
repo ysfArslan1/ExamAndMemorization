@@ -10,7 +10,7 @@ using QAM.Data.DBOperations;
 namespace QAM.Business.Command;
 
 public class ContactCommandHandler :
-    IRequestHandler<CreateContactCommand, ApiResponse<ContactResponse>>,
+    IRequestHandler<CreateContactCommand, ApiResponse>,
     IRequestHandler<UpdateContactCommand,ApiResponse>,
     IRequestHandler<DeleteContactCommand,ApiResponse>
 
@@ -25,14 +25,14 @@ public class ContactCommandHandler :
     }
 
     // Contact sýnýfýnýn database de oluþturulmasý için kullanýlan command
-    public async Task<ApiResponse<ContactResponse>> Handle(CreateContactCommand request, CancellationToken cancellationToken)
+    public async Task<ApiResponse> Handle(CreateContactCommand request, CancellationToken cancellationToken)
     {
         var check = await dbContext.Set<Contact>().Where(x => x.Email == request.Model.Email)
             .Include(x => x.User)
             .FirstOrDefaultAsync(cancellationToken);
         if (check != null)
         {
-            return new ApiResponse<ContactResponse>($"{request.Model.Email} is used by another Contact.");
+            return new ApiResponse($"{request.Model.Email} is used by another Contact.");
         }
 
         var entity = mapper.Map<CreateContactRequest, Contact>(request.Model);
@@ -42,8 +42,7 @@ public class ContactCommandHandler :
         var entityResult = await dbContext.AddAsync(entity, cancellationToken);
         await dbContext.SaveChangesAsync(cancellationToken);
 
-        var mapped = mapper.Map<Contact, ContactResponse>(entityResult.Entity);
-        return new ApiResponse<ContactResponse>(mapped);
+        return new ApiResponse();
     }
 
     // Contact sýnýfýnýn database de güncellenmesi için kullanýlan command
@@ -56,8 +55,6 @@ public class ContactCommandHandler :
         {
             return new ApiResponse("Record not found");
         }
-
-
 
         fromdb.Email = request.Model.Email;
         fromdb.PhoneNumber = request.Model.PhoneNumber;

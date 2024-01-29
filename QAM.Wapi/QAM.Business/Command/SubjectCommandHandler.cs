@@ -10,7 +10,7 @@ using QAM.Data.DBOperations;
 namespace QAM.Business.Command;
 
 public class SubjectCommandHandler :
-    IRequestHandler<CreateSubjectCommand, ApiResponse<SubjectResponse>>,
+    IRequestHandler<CreateSubjectCommand, ApiResponse>,
     IRequestHandler<UpdateSubjectCommand,ApiResponse>,
     IRequestHandler<DeleteSubjectCommand,ApiResponse>
 
@@ -25,13 +25,13 @@ public class SubjectCommandHandler :
     }
 
     // Subject sýnýfýnýn database de oluþturulmasý için kullanýlan command
-    public async Task<ApiResponse<SubjectResponse>> Handle(CreateSubjectCommand request, CancellationToken cancellationToken)
+    public async Task<ApiResponse> Handle(CreateSubjectCommand request, CancellationToken cancellationToken)
     {
         var check = await dbContext.Set<Subject>().Where(x => x.Name == request.Model.Name)
             .FirstOrDefaultAsync(cancellationToken);
         if (check != null)
         {
-            return new ApiResponse<SubjectResponse>($"{request.Model.Name} is used by another Subject.");
+            return new ApiResponse($"{request.Model.Name} is used by another Subject.");
         }
 
         var entity = mapper.Map<CreateSubjectRequest, Subject>(request.Model);
@@ -42,7 +42,7 @@ public class SubjectCommandHandler :
         await dbContext.SaveChangesAsync(cancellationToken);
 
         var mapped = mapper.Map<Subject, SubjectResponse>(entityResult.Entity);
-        return new ApiResponse<SubjectResponse>(mapped);
+        return new ApiResponse();
     }
 
     // Subject sýnýfýnýn database de güncellenmesi için kullanýlan command
