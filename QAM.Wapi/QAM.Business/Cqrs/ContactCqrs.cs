@@ -5,7 +5,7 @@ using QAM.Scheme;
 namespace QAM.Business.Cqrs;
 
 
-public record CreateContactCommand(int CurrentUserId, CreateContactRequest Model) : IRequest<ApiResponse<ContactResponse>>;
+public record CreateContactCommand(int CurrentUserId, CreateContactRequest Model) : IRequest<ApiResponse>;
 public record UpdateContactCommand(int Id, int CurrentUserId, UpdateContactRequest Model) : IRequest<ApiResponse>;
 public record DeleteContactCommand(int Id) : IRequest<ApiResponse>;
 

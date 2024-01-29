@@ -5,7 +5,7 @@ using QAM.Scheme;
 namespace QAM.Business.Cqrs;
 
 
-public record CreateUserCommand(int CurrentUserId, CreateUserRequest Model) : IRequest<ApiResponse<UserResponse>>;
+public record CreateUserCommand(int CurrentUserId, CreateUserRequest Model) : IRequest<ApiResponse>;
 public record UpdateUserCommand(int Id, int CurrentUserId, UpdateUserRequest Model) : IRequest<ApiResponse>;
 public record DeleteUserCommand(int Id) : IRequest<ApiResponse>;
 

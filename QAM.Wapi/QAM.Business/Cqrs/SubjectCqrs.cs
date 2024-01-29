@@ -5,7 +5,7 @@ using QAM.Scheme;
 namespace QAM.Business.Cqrs;
 
 
-public record CreateSubjectCommand(int CurrentUserId, CreateSubjectRequest Model) : IRequest<ApiResponse<SubjectResponse>>;
+public record CreateSubjectCommand(int CurrentUserId, CreateSubjectRequest Model) : IRequest<ApiResponse>;
 public record UpdateSubjectCommand(int Id, int CurrentUserId, UpdateSubjectRequest Model) : IRequest<ApiResponse>;
 public record DeleteSubjectCommand(int Id) : IRequest<ApiResponse>;
 

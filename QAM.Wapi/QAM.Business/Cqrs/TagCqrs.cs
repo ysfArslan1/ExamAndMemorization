@@ -5,7 +5,7 @@ using QAM.Scheme;
 namespace QAM.Business.Cqrs;
 
 
-public record CreateTagCommand(int CurrentUserId, CreateTagRequest Model) : IRequest<ApiResponse<TagResponse>>;
+public record CreateTagCommand(int CurrentUserId, CreateTagRequest Model) : IRequest<ApiResponse>;
 public record UpdateTagCommand(int Id, int CurrentUserId, UpdateTagRequest Model) : IRequest<ApiResponse>;
 public record DeleteTagCommand(int Id) : IRequest<ApiResponse>;
 

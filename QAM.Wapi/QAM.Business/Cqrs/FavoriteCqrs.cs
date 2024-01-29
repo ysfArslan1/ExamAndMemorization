@@ -5,7 +5,7 @@ using QAM.Scheme;
 namespace QAM.Business.Cqrs;
 
 
-public record CreateFavoriteCommand(int CurrentUserId, CreateFavoriteRequest Model) : IRequest<ApiResponse<FavoriteResponse>>;
+public record CreateFavoriteCommand(int CurrentUserId, CreateFavoriteRequest Model) : IRequest<ApiResponse>;
 public record UpdateFavoriteCommand(int Id, int CurrentUserId, UpdateFavoriteRequest Model) : IRequest<ApiResponse>;
 public record DeleteFavoriteCommand(int Id) : IRequest<ApiResponse>;
 
