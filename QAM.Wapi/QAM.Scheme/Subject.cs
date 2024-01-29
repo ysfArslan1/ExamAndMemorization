@@ -14,7 +14,7 @@ namespace QAM.Scheme
         public int UserId { get; set; }
         public string? Name { get; set; }
         public string? Description { get; set; }
-        public string? isPublic { get; set; }
+        public bool? isPublic { get; set; }
         public DateTime LastActivityDate { get; set; }
     }
     // Subject sınıfı için gelen update requestleri almakta kullanılır.
@@ -22,7 +22,7 @@ namespace QAM.Scheme
     {
         public string? Name { get; set; }
         public string? Description { get; set; }
-        public string? isPublic { get; set; }
+        public bool? isPublic { get; set; }
         public DateTime LastActivityDate { get; set; }
     }
 
@@ -33,7 +33,7 @@ namespace QAM.Scheme
         public string UserName { get; set; }
         public string? Name { get; set; }
         public string? Description { get; set; }
-        public string? isPublic { get; set; }
+        public bool? isPublic { get; set; }
         public DateTime LastActivityDate { get; set; }
     }
 

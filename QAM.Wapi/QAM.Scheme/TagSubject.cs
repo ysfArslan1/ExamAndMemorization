@@ -24,8 +24,8 @@ namespace QAM.Scheme
     // TagSubject sınıfı için response gönderilmekte kullanılır.
     public class TagSubjectResponse : BaseResponse
     {
-        public int TagName { get; set; }
-        public int SubjectName { get; set; }
+        public string TagName { get; set; }
+        public string SubjectName { get; set; }
     }
 
 }
