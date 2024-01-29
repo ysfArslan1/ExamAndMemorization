@@ -15,7 +15,7 @@ namespace QAM.Data.Entity
         public User? User { get; set; }
         public string? Name { get; set; }
         public string? Description { get; set; }
-        public string? isPublic { get; set; }
+        public bool? isPublic { get; set; }
         public DateTime LastActivityDate { get; set; }
         public virtual ICollection<Question>? Questions { get; set; }
         public virtual ICollection<TagSubject>? Tags { get; set; }
