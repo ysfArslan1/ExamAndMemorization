@@ -40,7 +40,7 @@ public class TagController : ControllerBase
 
     // Database de Tag verisi oluþturmak için kullanýlýr.
     [HttpPost]
-    public async Task<ApiResponse<TagResponse>> Post([FromBody] CreateTagRequest Tag)
+    public async Task<ApiResponse> Post([FromBody] CreateTagRequest Tag)
     {
         // Validation iþlemi uygulanýr
         CreateTagRequestValidator validator = new CreateTagRequestValidator();

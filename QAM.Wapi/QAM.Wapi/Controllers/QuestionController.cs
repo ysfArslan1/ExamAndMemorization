@@ -40,7 +40,7 @@ public class QuestionController : ControllerBase
 
     // Database de Question verisi oluþturmak için kullanýlýr.
     [HttpPost]
-    public async Task<ApiResponse<QuestionResponse>> Post([FromBody] CreateQuestionRequest Question)
+    public async Task<ApiResponse> Post([FromBody] CreateQuestionRequest Question)
     {
         // Validation iþlemi uygulanýr
         CreateQuestionRequestValidator validator = new CreateQuestionRequestValidator();

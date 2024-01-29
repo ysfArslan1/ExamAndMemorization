@@ -40,7 +40,7 @@ public class FavoriteController : ControllerBase
 
     // Database de Favorite verisi oluþturmak için kullanýlýr.
     [HttpPost]
-    public async Task<ApiResponse<FavoriteResponse>> Post([FromBody] CreateFavoriteRequest Favorite)
+    public async Task<ApiResponse> Post([FromBody] CreateFavoriteRequest Favorite)
     {
         // Validation iþlemi uygulanýr
         CreateFavoriteRequestValidator validator = new CreateFavoriteRequestValidator();

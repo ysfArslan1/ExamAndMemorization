@@ -40,7 +40,7 @@ public class UserController : ControllerBase
 
     // Database de User verisi oluþturmak için kullanýlýr.
     [HttpPost]
-    public async Task<ApiResponse<UserResponse>> Post([FromBody] CreateUserRequest user)
+    public async Task<ApiResponse> Post([FromBody] CreateUserRequest user)
     {
         // Validation iþlemi uygulanýr
         CreateUserRequestValidator validator = new CreateUserRequestValidator();

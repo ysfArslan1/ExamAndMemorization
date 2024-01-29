@@ -40,7 +40,7 @@ public class SubjectController : ControllerBase
 
     // Database de Subject verisi oluþturmak için kullanýlýr.
     [HttpPost]
-    public async Task<ApiResponse<SubjectResponse>> Post([FromBody] CreateSubjectRequest Subject)
+    public async Task<ApiResponse> Post([FromBody] CreateSubjectRequest Subject)
     {
         // Validation iþlemi uygulanýr
         CreateSubjectRequestValidator validator = new CreateSubjectRequestValidator();

@@ -40,7 +40,7 @@ public class ContactController : ControllerBase
 
     // Database de Contact verisi oluþturmak için kullanýlýr.
     [HttpPost]
-    public async Task<ApiResponse<ContactResponse>> Post([FromBody] CreateContactRequest Contact)
+    public async Task<ApiResponse> Post([FromBody] CreateContactRequest Contact)
     {
         // Validation iþlemi uygulanýr
         CreateContactRequestValidator validator = new CreateContactRequestValidator();
