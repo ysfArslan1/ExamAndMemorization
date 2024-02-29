@@ -1,5 +1,5 @@
 using AutoMapper;
-
+using QAM.Base.Encryption;
 using QAM.Data.Entity;
 using QAM.Scheme;
 
@@ -9,7 +9,8 @@ public class MapperConfig : Profile
 {
     public MapperConfig()
     {
-        CreateMap<CreateUserRequest, User>();
+        CreateMap<CreateUserRequest, User>()
+        .ForMember(dest => dest.Password, opt => opt.MapFrom(src => Md5Extension.GetHash(src.Password.Trim())));
         CreateMap<User, UserResponse>()
             .ForMember(dest => dest.RoleName,
                 src => src.MapFrom(x => x.Role.Name));

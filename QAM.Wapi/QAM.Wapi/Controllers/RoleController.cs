@@ -8,10 +8,12 @@ using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace QAM.Controllers;
 
 [Route("api/[controller]")]
+[Authorize(Roles = "Client")]
 [ApiController]
 public class RoleController : ControllerBase
 {

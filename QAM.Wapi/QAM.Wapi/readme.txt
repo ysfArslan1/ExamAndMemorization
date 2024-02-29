@@ -4,3 +4,9 @@ Projede veri tabaný olarak Microsoft SQL Server kullanýldý. Migration eklemek iç
     dotnet ef migrations add mig1 --project QAM.Data --startup-project QAM.Wapi
 Eklenen Migration'larýn uygulanmasý için kullanýlan komut ise þu þekildedir:
        dotnet ef database update --project "./QAM.Data" --startup-project "./QAM.Wapi"
+
+
+
+########
+kullanýcý a2@gmail.com 12345  // Contact admin
+kullanýcý e3@gmail.com 12345  // Role client

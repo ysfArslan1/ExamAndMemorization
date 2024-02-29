@@ -1,12 +1,17 @@
 ﻿using AutoMapper;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using QAM.Base.Token;
 using QAM.Business.Cqrs;
 using QAM.Business.Mapper;
 using QAM.Data.DBOperations;
 using QAM.Middlewares;
 using QAM.Services;
 using System.Reflection;
+using System.Text;
 
 namespace QAM.Wapi
 {
@@ -43,8 +48,55 @@ namespace QAM.Wapi
             services.AddEndpointsApiExplorer();
 
             // Swagger üzerinden yetkilendirmeler için token girilme alanı oluşturuldu
-            services.AddSwaggerGen();
-            }
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Vb Api Management", Version = "v1.0" });
+
+                var securityScheme = new OpenApiSecurityScheme
+                {
+                    Name = "Vb Management for IT Company",
+                    Description = "Enter JWT Bearer token **_only_**",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "bearer",
+                    BearerFormat = "JWT",
+                    Reference = new OpenApiReference
+                    {
+                        Id = JwtBearerDefaults.AuthenticationScheme,
+                        Type = ReferenceType.SecurityScheme
+                    }
+                };
+                c.AddSecurityDefinition(securityScheme.Reference.Id, securityScheme);
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    { securityScheme, new string[] { } }
+                });
+            });
+
+            // JwtToken configurasyonları yapıldı
+            JwtConfig jwtConfig = Configuration.GetSection("JwtConfig").Get<JwtConfig>();
+            services.Configure<JwtConfig>(Configuration.GetSection("JwtConfig"));
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(x =>
+            {
+                x.RequireHttpsMetadata = true;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidIssuer = jwtConfig.Issuer,
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtConfig.Secret)),
+                    ValidAudience = jwtConfig.Audience,
+                    ValidateAudience = false,
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.FromMinutes(2)
+                };
+            });
+        }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -56,6 +108,8 @@ namespace QAM.Wapi
             }
 
             app.UseHttpsRedirection();
+            // Yetkilendirme eklendi
+            app.UseAuthentication();
             app.UseRouting();
             app.UseAuthorization();
 
